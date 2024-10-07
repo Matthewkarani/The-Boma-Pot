@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 void main() {
   runApp(MyApp());
 }
@@ -77,8 +76,12 @@ class LandingPage extends StatelessWidget {
                             );
                           },
                           style: ElevatedButton.styleFrom(
-                            foregroundColor: const Color(0xFF00c4cc), // Button color
+                            backgroundColor: const Color(0xFF00c4cc), // Button color
                             padding: EdgeInsets.symmetric(vertical: 20), // Vertical padding
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8), // Rounded corners
+                              side: BorderSide.none, // Remove the border
+                            ),
                           ),
                           child: const Text(
                             'Discover Recipes',
@@ -175,8 +178,12 @@ class RecipesPage extends StatelessWidget {
                             );
                           },
                           style: ElevatedButton.styleFrom(
-                            foregroundColor: const Color(0xFF00c4cc), // Button color
+                            backgroundColor: const Color(0xFF00c4cc), // Button color
                             padding: EdgeInsets.symmetric(vertical: 20), // Vertical padding
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8), // Rounded corners
+                              side: BorderSide.none, // Remove the border
+                            ),
                           ),
                           child: const Text(
                             'Search',
