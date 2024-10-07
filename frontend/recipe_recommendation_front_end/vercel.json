@@ -1,0 +1,24 @@
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "build/web/**",
+        "use": "@vercel/static"
+      }
+    ],
+    "routes": [
+      {
+        "src": "/assets/(.*)",
+        "dest": "/build/web/assets/$1"
+      },
+      {
+        "src": "/AssetManifest.bin.json",
+        "dest": "/build/web/assets/AssetManifest.bin.json"
+      },
+      {
+        "src": "/(.*)",
+        "dest": "/build/web/index.html"
+      }
+    ]
+  }
+  
