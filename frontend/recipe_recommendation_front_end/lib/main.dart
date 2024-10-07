@@ -52,7 +52,7 @@ class LandingPage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(8), // Rounded corners
                       child: SizedBox(
                         width: double.infinity, // Set button width to fill its container
-                        child: ElevatedButton(
+                        child: MaterialButton(
                           onPressed: () {
                             // Navigate to RecipesPage with smooth transition
                             Navigator.push(
@@ -75,14 +75,12 @@ class LandingPage extends StatelessWidget {
                               ),
                             );
                           },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF00c4cc), // Button color
-                            padding: EdgeInsets.symmetric(vertical: 20), // Vertical padding
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8), // Rounded corners
-                              side: BorderSide.none, // Remove the border
-                            ),
+                          color: const Color(0xFF00c4cc), // Button color
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8), // Rounded corners
+                            side: BorderSide.none, // Remove the border
                           ),
+                          padding: const EdgeInsets.symmetric(vertical: 20), // Padding for the button
                           child: const Text(
                             'Discover Recipes',
                             style: TextStyle(
@@ -168,7 +166,7 @@ class RecipesPage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(8), // Rounded corners
                       child: SizedBox(
                         width: double.infinity, // Set button width to fill its container
-                        child: ElevatedButton(
+                        child: MaterialButton(
                           onPressed: () {
                             // Handle search action
                             ScaffoldMessenger.of(context).showSnackBar(
@@ -177,14 +175,12 @@ class RecipesPage extends StatelessWidget {
                               ),
                             );
                           },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF00c4cc), // Button color
-                            padding: EdgeInsets.symmetric(vertical: 20), // Vertical padding
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8), // Rounded corners
-                              side: BorderSide.none, // Remove the border
-                            ),
+                          color: const Color(0xFF00c4cc), // Button color
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8), // Rounded corners
+                            side: BorderSide.none, // Remove the border
                           ),
+                          padding: const EdgeInsets.symmetric(vertical: 20), // Padding for the button
                           child: const Text(
                             'Search',
                             style: TextStyle(
