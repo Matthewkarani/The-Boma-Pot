@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+
 void main() {
   runApp(MyApp());
 }
@@ -27,7 +28,7 @@ class LandingPage extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage('lib/images/landingPage.png'),
+                  image: AssetImage('assets/images/landingPage.png'),
                   fit: BoxFit.cover, // Ensures the image covers the entire screen
                 ),
               ),
@@ -114,7 +115,7 @@ class RecipesPage extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage('lib/images/addIngredientsPage.png'),
+                  image: AssetImage('assets/images/addIngredientsPage.png'),
                   fit: BoxFit.cover, // Ensures the image covers the entire screen
                 ),
               ),
