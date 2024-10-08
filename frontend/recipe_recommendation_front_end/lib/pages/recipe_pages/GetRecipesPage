@@ -1,6 +1,71 @@
 import 'package:flutter/material.dart';
+import 'package:recipe_recommendation_front_end/pages/recipe_pages/recipe_list_page';
 
-class GetRecipesPage extends StatelessWidget {
+class GetRecipesPage extends StatefulWidget {
+  @override
+  _GetRecipesPageState createState() => _GetRecipesPageState();
+}
+
+class _GetRecipesPageState extends State<GetRecipesPage> {
+  final TextEditingController _ingredientsController = TextEditingController();
+
+  // Function to simulate an API call to get recipes
+  Future<List<Map<String, dynamic>>> _fetchRecipes(String ingredients) async {
+    // Simulate a network delay
+    await Future.delayed(Duration(seconds: 2));
+
+    // Sample recipe data to simulate the response from the API
+    return [
+      {
+        'Title': 'Spaghetti Carbonara',
+        'Ingredients': 'Spaghetti, Eggs, Cheese, Pancetta, Pepper',
+        'Instructions': 'Cook spaghetti, mix with other ingredients, serve hot.',
+      },
+      {
+        'Title': 'Chicken Curry',
+        'Ingredients': 'Chicken, Spices, Coconut Milk, Onions',
+        'Instructions': 'Cook chicken with spices, add coconut milk, simmer.',
+      },
+      // Add more sample recipes as needed
+    ];
+  }
+
+  // Function to handle the search action based on input
+  void _searchRecipes() async {
+    String ingredients = _ingredientsController.text;
+
+    if (ingredients.isNotEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Searching for recipes with: $ingredients')),
+      );
+
+      // Fetch recipes from the simulated API
+      List<Map<String, dynamic>> recipes = await _fetchRecipes(ingredients);
+
+      // Navigate to RecipeListPage with ingredients and fetched recipes
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => RecipeListPage(
+            ingredients: ingredients,
+          
+            recipes: recipes,
+          ),
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please enter ingredients')),
+      );
+    }
+  }
+
+  @override
+  void dispose() {
+    _ingredientsController.dispose(); // Dispose of the controller when not needed
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     // Get the screen size
@@ -47,6 +112,7 @@ class GetRecipesPage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(8), // Rounded corners
                     ),
                     child: TextField(
+                      controller: _ingredientsController, // Attach the controller
                       style: const TextStyle(color: Colors.white), // Change text color to white
                       decoration: const InputDecoration(
                         border: InputBorder.none,
@@ -65,14 +131,7 @@ class GetRecipesPage extends StatelessWidget {
                       child: SizedBox(
                         width: double.infinity, // Set button width to fill its container
                         child: MaterialButton(
-                          onPressed: () {
-                            // Handle search action
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Searching for recipes...'),
-                              ),
-                            );
-                          },
+                          onPressed: _searchRecipes, // Handle search action
                           color: const Color(0xFF00c4cc), // Button color
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8), // Rounded corners

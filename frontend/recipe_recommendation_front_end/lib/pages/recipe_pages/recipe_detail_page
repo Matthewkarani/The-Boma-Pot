@@ -1,0 +1,77 @@
+import 'package:flutter/material.dart';
+
+class RecipeDetailPage extends StatelessWidget {
+  final Map<String, dynamic> recipe; // Field to hold the selected recipe details
+
+  // Constructor to accept recipe details
+  RecipeDetailPage({Key? key, required this.recipe}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Stack(
+        children: [
+          // Background image
+          SizedBox.expand(
+            child: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/images/SingleRecipePage.png'),
+                  fit: BoxFit.cover, // Ensures the image covers the entire screen
+                ),
+              ),
+            ),
+          ),
+         // Recipe details
+          // Main content
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Center( // Center all content within the padding
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start, // Center vertically
+                crossAxisAlignment: CrossAxisAlignment.center, // Center horizontally
+                children: [
+                   const SizedBox(height: 50),
+                  // Recipe Title
+                  Text(
+                    recipe['Title'] ?? 'Unknown Recipe',
+                    style: const TextStyle(fontSize: 70, fontWeight: FontWeight.bold, color: Colors.white), // Increased font size
+                    textAlign: TextAlign.center, // Center text alignment
+                  ),
+                  const SizedBox(height: 10), // Spacing
+
+                  // Recipe Ingredients
+                  const Text(
+                    'Ingredients:',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
+                    textAlign: TextAlign.center, // Center text alignment
+                  ),
+                  const SizedBox(height: 5),
+                  Text(
+                    recipe['Ingredients'] ?? 'No ingredients listed',
+                    style: const TextStyle(fontSize: 16, color: Colors.white),
+                    textAlign: TextAlign.center, // Center text alignment
+                  ),
+                  const SizedBox(height: 20), // Spacing
+
+                  // Recipe Instructions
+                  const Text(
+                    'Instructions:',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
+                    textAlign: TextAlign.center, // Center text alignment
+                  ),
+                  const SizedBox(height: 5),
+                  Text(
+                    recipe['Instructions'] ?? 'No instructions available',
+                    style: const TextStyle(fontSize: 16, color: Colors.white),
+                    textAlign: TextAlign.center, // Center text alignment
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

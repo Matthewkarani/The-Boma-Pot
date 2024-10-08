@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:recipe_recommendation_front_end/pages/recipe_pages/GetRecipesPage';
 
+class LandingPage extends StatefulWidget {
+  @override
+  _LandingPageState createState() => _LandingPageState();
+}
 
-class LandingPage extends StatelessWidget {
+class _LandingPageState extends State<LandingPage> {
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
@@ -42,13 +46,15 @@ class LandingPage extends StatelessWidget {
                             Navigator.push(
                               context,
                               PageRouteBuilder(
-                                pageBuilder: (context, animation, secondaryAnimation) => GetRecipesPage(),
+                                pageBuilder: (context, animation, secondaryAnimation) =>
+                                    GetRecipesPage(),
                                 transitionsBuilder: (context, animation, secondaryAnimation, child) {
                                   const begin = Offset(1.0, 0.0);
                                   const end = Offset.zero;
                                   const curve = Curves.easeInOut;
 
-                                  final tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+                                  final tween = Tween(begin: begin, end: end)
+                                      .chain(CurveTween(curve: curve));
                                   final offsetAnimation = animation.drive(tween);
 
                                   return SlideTransition(
