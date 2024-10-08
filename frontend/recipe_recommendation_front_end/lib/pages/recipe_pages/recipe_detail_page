@@ -22,6 +22,7 @@ class RecipeDetailPage extends StatelessWidget {
               ),
             ),
           ),
+         // Recipe details
           // Main content
           Padding(
             padding: const EdgeInsets.all(16.0),
@@ -30,6 +31,7 @@ class RecipeDetailPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start, // Center vertically
                 crossAxisAlignment: CrossAxisAlignment.center, // Center horizontally
                 children: [
+                   const SizedBox(height: 50),
                   // Recipe Title
                   Text(
                     recipe['Title'] ?? 'Unknown Recipe',
