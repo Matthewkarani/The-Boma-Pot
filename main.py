@@ -18,8 +18,8 @@ with open('tfidf_matrix.pkl','rb') as f:
     tfidf_matrix = joblib.load(f)
 
 #cosine simialrity 
-with open('cosine_sim.pkl','rb') as f:
-    cosine_sim = joblib.load(f)
+#with open('cosine_sim.pkl','rb') as f:
+    #cosine_sim = joblib.load(f)
 
 #combined df
 df = pd.read_csv('combined_df.csv')
@@ -35,7 +35,7 @@ def get_recommendation(ingredients: str):
         cleaned_input = clean_input(ingredients)
 
         #get recommendations using the recommend recipe
-        recommended_recipes = recommend_recipes(cleaned_input, df, cosine_sim, tfidf_vectorizer)
+        recommended_recipes = recommend_recipes(cleaned_input, df, tfidf_matrix, tfidf_vectorizer)
         if isinstance(recommended_recipes, str):
             return {"message": recommended_recipes}
         
