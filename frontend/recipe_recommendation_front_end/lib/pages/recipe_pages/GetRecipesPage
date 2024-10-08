@@ -1,4 +1,6 @@
+import 'dart:convert'; // For encoding JSON data
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http; // Import the HTTP package
 import 'package:recipe_recommendation_front_end/pages/recipe_pages/recipe_list_page';
 
 class GetRecipesPage extends StatefulWidget {
@@ -9,25 +11,36 @@ class GetRecipesPage extends StatefulWidget {
 class _GetRecipesPageState extends State<GetRecipesPage> {
   final TextEditingController _ingredientsController = TextEditingController();
 
-  // Function to simulate an API call to get recipes
+  // Function to call the API and get recipes
   Future<List<Map<String, dynamic>>> _fetchRecipes(String ingredients) async {
-    // Simulate a network delay
-    await Future.delayed(Duration(seconds: 2));
+    final url = Uri.parse('http://127.0.0.1:5000/recommend'); // Replace with your API URL
+    try {
+      // Make a POST request
+      final response = await http.post(
+        url,
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({'ingredients': ingredients}), // Send ingredients as JSON
+      );
 
-    // Sample recipe data to simulate the response from the API
-    return [
-      {
-        'Title': 'Spaghetti Carbonara',
-        'Ingredients': 'Spaghetti, Eggs, Cheese, Pancetta, Pepper',
-        'Instructions': 'Cook spaghetti, mix with other ingredients, serve hot.',
-      },
-      {
-        'Title': 'Chicken Curry',
-        'Ingredients': 'Chicken, Spices, Coconut Milk, Onions',
-        'Instructions': 'Cook chicken with spices, add coconut milk, simmer.',
-      },
-      // Add more sample recipes as needed
-    ];
+      // Check if the response is successful
+      if (response.statusCode == 200) {
+        // Parse the JSON response
+        List<dynamic> data = jsonDecode(response.body);
+
+        // Convert the dynamic list into a list of maps for recipes
+        List<Map<String, dynamic>> recipes = List<Map<String, dynamic>>.from(data);
+
+        return recipes;
+      } else {
+        // Handle error response
+        print('Failed to load recipes: ${response.statusCode}');
+        return [];
+      }
+    } catch (error) {
+      // Handle network errors
+      print('Error occurred: $error');
+      return [];
+    }
   }
 
   // Function to handle the search action based on input
@@ -39,20 +52,25 @@ class _GetRecipesPageState extends State<GetRecipesPage> {
         SnackBar(content: Text('Searching for recipes with: $ingredients')),
       );
 
-      // Fetch recipes from the simulated API
+      // Fetch recipes from the API
       List<Map<String, dynamic>> recipes = await _fetchRecipes(ingredients);
 
-      // Navigate to RecipeListPage with ingredients and fetched recipes
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => RecipeListPage(
-            ingredients: ingredients,
-          
-            recipes: recipes,
+      if (recipes.isNotEmpty) {
+        // Navigate to RecipeListPage with ingredients and fetched recipes
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => RecipeListPage(
+              ingredients: ingredients,
+              recipes: recipes,
+            ),
           ),
-        ),
-      );
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('No recipes found for the given ingredients')),
+        );
+      }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Please enter ingredients')),
@@ -68,82 +86,72 @@ class _GetRecipesPageState extends State<GetRecipesPage> {
 
   @override
   Widget build(BuildContext context) {
-    // Get the screen size
     final Size screenSize = MediaQuery.of(context).size;
 
     return Scaffold(
       body: Stack(
         children: [
-          // Full-page background image using SizedBox
           SizedBox.expand(
             child: Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage('assets/images/addIngredientsPage.png'),
-                  fit: BoxFit.cover, // Ensures the image covers the entire screen
+                  fit: BoxFit.cover,
                 ),
               ),
             ),
           ),
-          // Centered content with input box and search button
           Positioned(
-            left: screenSize.width * 0.05, // Align to the left
-            bottom: screenSize.height * 0.15, // Position just above the home icon
-            width: screenSize.width * 0.4, // Occupy the left half of the screen
+            left: screenSize.width * 0.05,
+            bottom: screenSize.height * 0.15,
+            width: screenSize.width * 0.4,
             child: Padding(
-              padding: const EdgeInsets.all(16.0), // Add padding to the left half
+              padding: const EdgeInsets.all(16.0),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.end, // Align to the bottom of the column
+                mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
                     'Get ready to excite your taste buds!',
-                    style: TextStyle(
-                      fontSize: 24,
-                      color: Colors.white,
-                    ),
+                    style: TextStyle(fontSize: 24, color: Colors.white),
                   ),
-                  const SizedBox(height: 16), // Spacing between text and input box
-                  // Input Box with contrasting hint text color
+                  const SizedBox(height: 16),
                   Container(
-                    width: double.infinity, // Set input box width to fill its container
+                    width: double.infinity,
                     decoration: BoxDecoration(
-                      border: Border.all(color: Colors.white, width: 2), // White border
-                      borderRadius: BorderRadius.circular(8), // Rounded corners
+                      border: Border.all(color: Colors.white, width: 2),
+                      borderRadius: BorderRadius.circular(8),
                     ),
                     child: TextField(
-                      controller: _ingredientsController, // Attach the controller
-                      style: const TextStyle(color: Colors.white), // Change text color to white
+                      controller: _ingredientsController,
+                      style: const TextStyle(color: Colors.white),
                       decoration: const InputDecoration(
                         border: InputBorder.none,
                         hintText: 'Please enter your ingredients here',
-                        hintStyle: TextStyle(color: Color(0xFFFFD700)), // Light beige color for hint text
-                        contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 15), // Padding for the input
+                        hintStyle: TextStyle(color: Color(0xFFFFD700)),
+                        contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
                       ),
                     ),
                   ),
-                  const SizedBox(height: 16), // Spacing between input box and button
+                  const SizedBox(height: 16),
                   Container(
-                    margin: const EdgeInsets.only(top: 10), // Margin around the button
+                    margin: const EdgeInsets.only(top: 10),
                     child: Material(
-                      elevation: 5, // Add elevation for a shadow effect
-                      borderRadius: BorderRadius.circular(8), // Rounded corners
+                      elevation: 5,
+                      borderRadius: BorderRadius.circular(8),
                       child: SizedBox(
-                        width: double.infinity, // Set button width to fill its container
+                        width: double.infinity,
                         child: MaterialButton(
-                          onPressed: _searchRecipes, // Handle search action
-                          color: const Color(0xFF00c4cc), // Button color
+                          onPressed: _searchRecipes,
+                          color: const Color(0xFF00c4cc),
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8), // Rounded corners
-                            side: BorderSide.none, // Remove the border
+                            borderRadius: BorderRadius.circular(8),
+                            side: BorderSide.none,
                           ),
-                          padding: const EdgeInsets.symmetric(vertical: 20), // Padding for the button
+                          padding: const EdgeInsets.symmetric(vertical: 20),
                           child: const Text(
                             'Search',
-                            style: TextStyle(
-                              fontSize: 20, // Enlarged text size
-                              color: Colors.white, // Text color
-                            ),
+                            style: TextStyle(fontSize: 20, color: Colors.white),
                           ),
                         ),
                       ),
@@ -153,19 +161,17 @@ class _GetRecipesPageState extends State<GetRecipesPage> {
               ),
             ),
           ),
-          // Positioned Home Icon
           Positioned(
-            bottom: screenSize.height * 0.05, // Adjust the distance from the bottom
-            left: screenSize.width * 0.05, // Align to the left to match other elements
+            bottom: screenSize.height * 0.05,
+            left: screenSize.width * 0.05,
             child: GestureDetector(
               onTap: () {
-                // Navigate back to the LandingPage with smooth transition
                 Navigator.of(context).pop();
               },
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.teal, // Background color for the icon
-                  borderRadius: BorderRadius.circular(30), // Rounded corners
+                  color: Colors.teal,
+                  borderRadius: BorderRadius.circular(30),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black26,
@@ -174,11 +180,11 @@ class _GetRecipesPageState extends State<GetRecipesPage> {
                     ),
                   ],
                 ),
-                padding: const EdgeInsets.all(12), // Padding around the icon
+                padding: const EdgeInsets.all(12),
                 child: const Icon(
                   Icons.home,
                   color: Colors.white,
-                  size: 30, // Icon size
+                  size: 30,
                 ),
               ),
             ),
