@@ -61,8 +61,23 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+
+  # Page Backgrounds. 
+    # Page Count - 7 
+
       - assets/images/landingPage.png
+      - assets/images/SignUpPage.png
+      - assets/images/SignInPage.png
+      - assets/images/ProfilePage.png
       - assets/images/addIngredientsPage.png
+      - assets/images/RecipeListPage.png
+      - assets/images/SingleRecipePage.png
+
+
+
+      
+
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
