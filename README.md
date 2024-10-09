@@ -36,7 +36,9 @@ We are working with two datasets. The first is from the Food and Agriculture Org
 
 ### Access Data
 Click this link below:
+
       1.Ministry of Agriculture
+      
       2.Food Ingredients and Recipe Dataset
 
 ### Scope of the project
@@ -50,18 +52,24 @@ Click this link below:
 ### Data Frame one
 
 The dataset contains a CSV file and a zipped folder, consisting of 13,501 rows and 5 columns respectively as follows:
-    1.Title: Represents the Title of the Food Dish.
-    2.Ingredients: Contains the ingredients as they were scraped from the website.
-    3.Instructions: Has the recipe instructions to be followed to recreate the dish.
-    4.Image_Name: Has the name of the image as stored in the Food Images zipped folder.
-    5.Cleaned_Ingredients: Contains the ingredients after being processed and cleaned.
+  1.Title: Represents the Title of the Food Dish.
+    
+  2.Ingredients: Contains the ingredients as they were scraped from the website.
+    
+  3.Instructions: Has the recipe instructions to be followed to recreate the dish.
+    
+  4.Image_Name: Has the name of the image as stored in the Food Images zipped folder.
+    
+  5.Cleaned_Ingredients: Contains the ingredients after being processed and cleaned.
 
 
 ### Data Frame two
 
 The dataset is CSV file, it contains rows 142 and 16 columns respectively as follows:
   1.Title: Represents the Title of the Food Dish.
+  
   2.Ingredients: Contains the ingredients as they were scraped from the website.
+  
   3.Instructions: Has the recipe instructions to be followed to recreate the dish.
 
 ## Modelling
@@ -69,8 +77,11 @@ The dataset is CSV file, it contains rows 142 and 16 columns respectively as fol
 ### Function to get Recipes based on Ingredients
 
  1.Applying tokenization in our ingredient column
- 2.Defining Function for Ingredients and Title, that is the system is set to work and recommend based on the input, the user can input either title or       the ingredients to get the instruction and title or ingredients which will depend with his input
+ 
+ 2.Defining Function for Ingredients and Title, that is the system is set to work and recommend based on the input, the user can input either title or       the ingredients to get the instruction and title or ingredients which will depend with his input.
+ 
  3.Feature Engineering
+ 
  4.Intiating TF-IDF Vectorizer to create vectors based on both the recipe title and ingredients.
 
 
@@ -82,4 +93,4 @@ In order for a user to get recommended recipes, we need to save some code such a
 
 So the TF-IDF Vectorizer and the combined dataframe will be saved as pickle files while the combined_df saved as .py file to make it easy to adjust here and there.
 
-![png](13.png)
+![png](13.PNG)
