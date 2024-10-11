@@ -1,0 +1,43 @@
+# Use the official Python image from Docker Hub
+FROM python:3.11-slim
+
+# Set environment variables for Flutter
+ENV FLUTTER_VERSION=3.13.0
+ENV PATH="$PATH:/opt/flutter/bin:/opt/flutter/bin/cache/dart-sdk/bin"
+
+# Install dependencies
+RUN apt-get update && apt-get install -y \
+    curl \
+    git \
+    unzip \
+    xz-utils \
+    zip \
+    && apt-get clean
+
+# Install Flutter
+RUN git clone https://github.com/flutter/flutter.git /opt/flutter -b stable && \
+    flutter doctor
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy the requirements file to the working directory
+COPY requirements.txt .
+
+# Install Python dependencies for FastAPI and Data Science
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy the rest of your application code to the working directory
+COPY . .
+
+# Install FastAPI, Uvicorn, and common data science libraries
+RUN pip install fastapi uvicorn numpy pandas scikit-learn matplotlib seaborn
+
+# Copy the start script into the container
+COPY start.sh .
+
+# Make the start script executable
+RUN chmod +x start.sh
+
+# Specify the command to run the start script
+CMD ["./start.sh"]

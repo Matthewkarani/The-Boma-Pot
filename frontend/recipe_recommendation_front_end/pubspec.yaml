@@ -31,6 +31,8 @@ dependencies:
   flutter:
     sdk: flutter
   http: ^1.2.2
+  cached_network_image: ^3.2.1
+  carousel_slider: ^4.0.0
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -40,6 +42,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -72,6 +75,12 @@ flutter:
       - assets/images/addIngredientsPage.png
       - assets/images/RecipeListPage.png
       - assets/images/SingleRecipePage.png
+      
+
+      # Placeholder Image 
+        # Placeholder Image Count - 1
+      
+      - assets/images/placeholder_image.png
 
 
 
