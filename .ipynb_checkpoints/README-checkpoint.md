@@ -2,12 +2,12 @@
 
 <br>
 - Group 3
-Group Members.
-- Cindy Tumaini
-- Margret Namunyak
-- Faith Wafula
-- Martin Waweru
-- Matthew Karani
+- Group Members.
+    - Cindy Tumaini
+    - Margret Namunyak
+    - Faith Wafula
+    - Martin Waweru
+    - Matthew Karani
   <br>
 
 ## Table Of Contents
